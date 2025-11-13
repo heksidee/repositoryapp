@@ -1,12 +1,11 @@
-import { useQuery } from "@apollo/client";
-import { GET_REPOSITORIES } from "../graphql/queries";
 import { FlatList, View, StyleSheet } from "react-native";
 import RepositoryItem from "./RepositoryItem";
-//import useRepositories from "../hooks/useRepositories";
+import useRepositories from "../hooks/useRepositories";
 import ThemedText from "./ThemedText";
 
 console.log("RepositoryItem:", RepositoryItem);
 console.log("ThemedText:", ThemedText);
+
 const styles = StyleSheet.create({
   separator: {
     height: 10,
@@ -16,13 +15,11 @@ const styles = StyleSheet.create({
 const ItemSeparator = () => <View style={styles.separator} />;
 
 const RepositoryList = () => {
-  const { data, loading, error } = useQuery(GET_REPOSITORIES);
+  const { repositories, loading, error } = useRepositories();
 
   if (loading) return <ThemedText>Loading...</ThemedText>;
   if (error)
     return <ThemedText color="errorText">Error: {error.message}</ThemedText>;
-
-  const repositories = data.repositories.edges.map((edge) => edge.node);
 
   return (
     <FlatList
