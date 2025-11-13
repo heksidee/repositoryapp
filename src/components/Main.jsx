@@ -7,11 +7,6 @@ import AppBar from "./AppBar";
 import SignIn from "./SignIn";
 import theme from "../theme";
 
-console.log("Routes:", Routes);
-console.log("Route:", Route);
-console.log("Navigate:", Navigate);
-console.log("AppBar:", AppBar);
-
 const Main = () => {
   return (
     <View style={styles.container}>

@@ -1,15 +1,12 @@
 import "fast-text-encoding";
 import React from "react";
 import { NativeRouter } from "react-router-native";
-import { ApolloProvider } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client/react";
 import Main from "./src/components/Main";
 import createApolloClient from "./src/utils/apolloClient";
 
 const apolloClient = createApolloClient();
 
-console.log("Main component:", Main);
-console.log("ApolloClient:", apolloClient);
-console.log("NativeRouter:", NativeRouter);
 const App = () => {
   return (
     <>
