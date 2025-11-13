@@ -5,6 +5,8 @@ import RepositoryItem from "./RepositoryItem";
 //import useRepositories from "../hooks/useRepositories";
 import ThemedText from "./ThemedText";
 
+console.log("RepositoryItem:", RepositoryItem);
+console.log("ThemedText:", ThemedText);
 const styles = StyleSheet.create({
   separator: {
     height: 10,
