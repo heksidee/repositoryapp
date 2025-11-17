@@ -26,4 +26,24 @@ module.exports = [
       react: { version: "detect" },
     },
   },
+  {
+    files: ["**/*.test.js", "**/*.test.jsx"],
+    plugins: {
+      jest: jestPlugin,
+    },
+    languageOptions: {
+      globals: {
+        test: true,
+        expect: true,
+        describe: true,
+        beforeEach: true,
+        afterEach: true,
+        it: true,
+        jest: true,
+      },
+    },
+    rules: {
+      ...jestPlugin.configs.recommended.rules,
+    },
+  },
 ];
