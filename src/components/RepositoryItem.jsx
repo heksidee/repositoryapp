@@ -1,10 +1,11 @@
 import React from "react";
+import * as Linking from "expo-linking";
 import { View, StyleSheet, Image, Pressable } from "react-native";
 import StatConverter from "./StatConverter";
 import ThemedText from "./ThemedText";
 import { useNavigate } from "react-router-native";
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showGitHubButton = false }) => {
   const navigate = useNavigate();
   return (
     <Pressable onPress={() => navigate(`/repository/${item.id}`)}>
@@ -37,9 +38,14 @@ const RepositoryItem = ({ item }) => {
             <ThemedText>Rating</ThemedText>
           </View>
         </View>
-        <Pressable style={styles.button}>
-          <ThemedText style={styles.buttonText}>Open in GitHub</ThemedText>
-        </Pressable>
+        {showGitHubButton && (
+          <Pressable
+            onPress={() => Linking.openURL(item.url)}
+            style={styles.button}
+          >
+            <ThemedText style={styles.buttonText}>Open in GitHub</ThemedText>
+          </Pressable>
+        )}
       </View>
     </Pressable>
   );

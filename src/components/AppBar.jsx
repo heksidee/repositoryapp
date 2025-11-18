@@ -10,14 +10,18 @@ const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
     paddingHorizontal: 15,
-    paddingBottom: 15,
+    paddingBottom: 25,
+    paddingTop: 80,
     backgroundColor: "#24292e",
     flexDirection: "row",
   },
   appBarText: {
-    marginRight: 10,
+    marginRight: 20,
   },
   scrollView: {
+    flexDirection: "row",
+  },
+  userView: {
     flexDirection: "row",
   },
 });
@@ -40,16 +44,30 @@ const AppBar = () => {
           </ThemedText>
         </Link>
         {user ? (
-          <Pressable onPress={signOut}>
-            <ThemedText
-              fontWeight="bold"
-              fontSize="subheading"
-              color="textButton"
-              style={styles.appBarText}
-            >
-              Sign Out
-            </ThemedText>
-          </Pressable>
+          <View style={styles.userView}>
+            <Pressable onPress={signOut}>
+              <ThemedText
+                fontWeight="bold"
+                fontSize="subheading"
+                color="textButton"
+                style={styles.appBarText}
+              >
+                Sign Out
+              </ThemedText>
+            </Pressable>
+            <Pressable>
+              <Link to="/create">
+                <ThemedText
+                  fontWeight="bold"
+                  fontSize="subheading"
+                  color="textButton"
+                  style={styles.appBarText}
+                >
+                  Create a review
+                </ThemedText>
+              </Link>
+            </Pressable>
+          </View>
         ) : (
           <Link to="/signin">
             <ThemedText

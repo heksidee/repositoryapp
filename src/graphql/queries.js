@@ -14,6 +14,7 @@ export const GET_REPOSITORIES = gql`
           forksCount
           reviewCount
           ratingAverage
+          url
         }
       }
     }
@@ -42,6 +43,20 @@ export const GET_REPOSITORY = gql`
       reviewCount
       ratingAverage
       ownerAvatarUrl
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;

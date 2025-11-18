@@ -1,12 +1,22 @@
 import React from "react";
-import { View } from "react-native";
+import { View, FlatList, StyleSheet } from "react-native";
 import { useParams } from "react-router-native";
+import { useQuery } from "@apollo/client/react";
+import { GET_REPOSITORY } from "../graphql/queries";
 import RepositoryItem from "./RepositoryItem";
+import ReviewItem from "./ReviewItem";
 import ThemedText from "./ThemedText";
 
-const Repository = ({ repositories }) => {
+const Repository = () => {
   const { id } = useParams();
-  const repo = repositories.find((r) => r.id === id);
+  const { data, loading, error } = useQuery(GET_REPOSITORY, {
+    variables: { repositoryId: id },
+  });
+  if (loading) return <ThemedText>Loading...</ThemedText>;
+  if (error)
+    return <ThemedText color="errorText">Error: {error.message}</ThemedText>;
+
+  const repo = data?.repository;
   if (!repo)
     return (
       <View>
@@ -14,6 +24,29 @@ const Repository = ({ repositories }) => {
       </View>
     );
 
-  return <RepositoryItem item={repo} />;
+  const reviews = repo.reviews.edges.map((edge) => edge.node);
+
+  const styles = StyleSheet.create({
+    separator: {
+      height: 10,
+    },
+  });
+
+  const ItemSeparator = () => <View style={styles.separator} />;
+
+  return (
+    <FlatList
+      data={reviews}
+      ItemSeparatorComponent={ItemSeparator}
+      keyExtractor={(item) => item.id}
+      renderItem={({ item }) => <ReviewItem review={item} />}
+      ListHeaderComponent={
+        <>
+          <RepositoryItem item={repo} showGitHubButton />
+          <ItemSeparator />
+        </>
+      }
+    />
+  );
 };
 export default Repository;
