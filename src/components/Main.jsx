@@ -8,6 +8,7 @@ import SignIn from "./SignIn";
 import theme from "../theme";
 import Repository from "./Repository";
 import CreateReview from "./CreateReview";
+import SignUp from "./SignUp";
 
 const Main = () => {
   return (
@@ -18,6 +19,7 @@ const Main = () => {
         <Route path="/signin" element={<SignIn />} />
         <Route path="/repository/:id" element={<Repository />} />
         <Route path="/create" element={<CreateReview />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </View>

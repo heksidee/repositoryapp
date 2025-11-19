@@ -4,10 +4,9 @@ import * as yup from "yup";
 import ThemedText from "./ThemedText";
 
 const initialValues = {
-  ownerName: "",
-  repoName: "",
-  rating: "",
-  review: "",
+  username: "",
+  password: "",
+  confirmPassword: "",
 };
 
 const styles = StyleSheet.create({
@@ -43,12 +42,15 @@ const styles = StyleSheet.create({
 });
 
 const validationSchema = yup.object().shape({
-  ownerName: yup.string().required("Repository owner name is required"),
-  repoName: yup.string().required("Repository name is required"),
-  rating: yup.number().required("Rating is required").min(0).max(100),
+  username: yup.string().required("Username is required").min(5).max(30),
+  password: yup.string().required("Password is required").min(5).max(50),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+    .required("Password confirmation is required"),
 });
 
-const CreateReviewForm = ({ onSubmit }) => {
+const SignUpForm = ({ onSubmit }) => {
   const formik = useFormik({
     initialValues,
     validationSchema,
@@ -59,76 +61,70 @@ const CreateReviewForm = ({ onSubmit }) => {
     <View style={styles.form}>
       <View style={styles.totalInput}>
         <TextInput
-          placeholder="Repository owner name"
-          value={formik.values.ownerName}
-          onChangeText={formik.handleChange("ownerName")}
-          onBlur={formik.handleBlur("ownerName")}
+          placeholder="Username"
+          value={formik.values.username}
+          onChangeText={formik.handleChange("username")}
+          onBlur={formik.handleBlur("username")}
           style={[
             styles.input,
-            formik.touched.ownerName &&
-              formik.errors.ownerName &&
+            formik.touched.username &&
+              formik.errors.username &&
               styles.errorInput,
           ]}
         />
-        {formik.touched.ownerName && formik.errors.ownerName && (
+        {formik.touched.username && formik.errors.username && (
           <ThemedText color="errorText" style={styles.errorText}>
-            {formik.errors.ownerName}
+            {formik.errors.username}
           </ThemedText>
         )}
       </View>
       <View style={styles.totalInput}>
         <TextInput
-          placeholder="Repository name"
-          value={formik.values.repoName}
-          onChangeText={formik.handleChange("repoName")}
-          onBlur={formik.handleBlur("repoName")}
+          placeholder="Password"
+          value={formik.values.password}
+          onChangeText={formik.handleChange("password")}
+          onBlur={formik.handleBlur("password")}
+          secureTextEntry={true}
           style={[
             styles.input,
-            formik.touched.repoName &&
-              formik.errors.repoName &&
+            formik.touched.password &&
+              formik.errors.password &&
               styles.errorInput,
           ]}
         />
-        {formik.touched.repoName && formik.errors.repoName && (
+        {formik.touched.password && formik.errors.password && (
           <ThemedText color="errorText" style={styles.errorText}>
-            {formik.errors.repoName}
+            {formik.errors.password}
           </ThemedText>
         )}
       </View>
       <View style={styles.totalInput}>
         <TextInput
-          placeholder="Rating between 0 and 100"
-          value={formik.values.rating}
-          onChangeText={formik.handleChange("rating")}
-          onBlur={formik.handleBlur("rating")}
+          placeholder="Password confirmation"
+          value={formik.values.confirmPassword}
+          onChangeText={formik.handleChange("confirmPassword")}
+          onBlur={formik.handleBlur("confirmPassword")}
+          secureTextEntry={true}
           style={[
             styles.input,
-            formik.touched.rating && formik.errors.rating && styles.errorInput,
+            formik.touched.confirmPassword &&
+              formik.errors.confirmPassword &&
+              styles.errorInput,
           ]}
         />
-        {formik.touched.rating && formik.errors.rating && (
+        {formik.touched.confirmPassword && formik.errors.confirmPassword && (
           <ThemedText color="errorText" style={styles.errorText}>
-            {formik.errors.rating}
+            {formik.errors.confirmPassword}
           </ThemedText>
         )}
-      </View>
-      <View style={styles.totalInput}>
-        <TextInput
-          placeholder="Review"
-          value={formik.values.review}
-          onChangeText={formik.handleChange("review")}
-          onBlur={formik.handleBlur("review")}
-          style={[styles.input, formik.touched.review]}
-          multiline={true}
-        />
       </View>
       <Pressable onPress={formik.handleSubmit} style={styles.button}>
         <ThemedText fontWeight="bold" color="textButton">
-          Create a review
+          Sign up
         </ThemedText>
       </Pressable>
     </View>
   );
 };
 
-export default CreateReviewForm;
+export default SignUpForm;

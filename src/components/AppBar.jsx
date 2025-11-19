@@ -52,7 +52,7 @@ const AppBar = () => {
                 color="textButton"
                 style={styles.appBarText}
               >
-                Sign Out
+                Sign out
               </ThemedText>
             </Pressable>
             <Pressable>
@@ -69,16 +69,28 @@ const AppBar = () => {
             </Pressable>
           </View>
         ) : (
-          <Link to="/signin">
-            <ThemedText
-              fontWeight="bold"
-              fontSize="subheading"
-              color="textButton"
-              style={styles.appBarText}
-            >
-              Sign In
-            </ThemedText>
-          </Link>
+          <View style={styles.userView}>
+            <Link to="/signin">
+              <ThemedText
+                fontWeight="bold"
+                fontSize="subheading"
+                color="textButton"
+                style={styles.appBarText}
+              >
+                Sign In
+              </ThemedText>
+            </Link>
+            <Link to="/signup">
+              <ThemedText
+                fontWeight="bold"
+                fontSize="subheading"
+                color="textButton"
+                style={styles.appBarText}
+              >
+                Sign up
+              </ThemedText>
+            </Link>
+          </View>
         )}
       </ScrollView>
     </View>

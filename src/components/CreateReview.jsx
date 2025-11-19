@@ -20,7 +20,7 @@ const CreateReview = () => {
           },
         },
       });
-      navigate(`/repositories/${data.createReview.repositoryId}`);
+      navigate(`/repository/${data.createReview.repositoryId}`);
     } catch (e) {
       console.error(e);
     }
