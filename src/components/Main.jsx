@@ -9,6 +9,7 @@ import theme from "../theme";
 import Repository from "./Repository";
 import CreateReview from "./CreateReview";
 import SignUp from "./SignUp";
+import MyReviews from "./MyReviews";
 
 const Main = () => {
   return (
@@ -20,6 +21,7 @@ const Main = () => {
         <Route path="/repository/:id" element={<Repository />} />
         <Route path="/create" element={<CreateReview />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/myreviews" element={<MyReviews />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </View>

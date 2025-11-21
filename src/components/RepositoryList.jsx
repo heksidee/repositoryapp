@@ -1,21 +1,22 @@
 import { useState } from "react";
+import { useDebounce } from "use-debounce";
 import useRepositories from "../hooks/useRepositories";
 import RepositoryListContainer from "./RepositoryListContainer";
 import ThemedText from "./ThemedText";
 
 const RepositoryList = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
+  const [debouncedSearchKeyword] = useDebounce(searchKeyword, 500);
   const [orderOption, setOrderOption] = useState("latest");
   const [orderBy, setOrderBy] = useState("CREATED_AT");
   const [orderDirection, setOrderDirection] = useState("DESC");
 
-  const { repositories, loading, error } = useRepositories({
+  const { repositories, error } = useRepositories({
     orderBy,
     orderDirection,
-    searchKeyword,
+    searchKeyword: debouncedSearchKeyword,
   });
 
-  if (loading) return <ThemedText>Loading...</ThemedText>;
   if (error)
     return <ThemedText color="errorText">Error: {error.message}</ThemedText>;
 

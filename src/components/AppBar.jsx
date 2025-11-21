@@ -45,16 +45,6 @@ const AppBar = () => {
         </Link>
         {user ? (
           <View style={styles.userView}>
-            <Pressable onPress={signOut}>
-              <ThemedText
-                fontWeight="bold"
-                fontSize="subheading"
-                color="textButton"
-                style={styles.appBarText}
-              >
-                Sign out
-              </ThemedText>
-            </Pressable>
             <Pressable>
               <Link to="/create">
                 <ThemedText
@@ -66,6 +56,28 @@ const AppBar = () => {
                   Create a review
                 </ThemedText>
               </Link>
+            </Pressable>
+            <Pressable>
+              <Link to="/myreviews">
+                <ThemedText
+                  fontWeight="bold"
+                  fontSize="subheading"
+                  color="textButton"
+                  style={styles.appBarText}
+                >
+                  My reviews
+                </ThemedText>
+              </Link>
+            </Pressable>
+            <Pressable onPress={signOut}>
+              <ThemedText
+                fontWeight="bold"
+                fontSize="subheading"
+                color="textButton"
+                style={styles.appBarText}
+              >
+                Sign out
+              </ThemedText>
             </Pressable>
           </View>
         ) : (

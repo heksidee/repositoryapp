@@ -2,6 +2,8 @@ import "fast-text-encoding";
 import React from "react";
 import { NativeRouter } from "react-router-native";
 import { ApolloProvider } from "@apollo/client/react";
+import { Provider as PaperProvider } from "react-native-paper";
+
 import Main from "./src/components/Main";
 import createApolloClient from "./src/utils/apolloClient";
 import AuthStorage from "./src/utils/authStorage";
@@ -13,13 +15,15 @@ const apolloClient = createApolloClient(authStorage);
 const App = () => {
   return (
     <>
-      <NativeRouter>
-        <ApolloProvider client={apolloClient}>
-          <AuthStorageContext.Provider value={authStorage}>
-            <Main />
-          </AuthStorageContext.Provider>
-        </ApolloProvider>
-      </NativeRouter>
+      <PaperProvider>
+        <NativeRouter>
+          <ApolloProvider client={apolloClient}>
+            <AuthStorageContext.Provider value={authStorage}>
+              <Main />
+            </AuthStorageContext.Provider>
+          </ApolloProvider>
+        </NativeRouter>
+      </PaperProvider>
     </>
   );
 };
