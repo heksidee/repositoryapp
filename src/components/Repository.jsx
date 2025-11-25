@@ -9,13 +9,10 @@ import ThemedText from "./ThemedText";
 
 const Repository = () => {
   const { id } = useParams();
-  const { data, loading, error } = useQuery(GET_REPOSITORY, {
-    variables: { repositoryId: id },
+  const { data, fetchMore } = useQuery(GET_REPOSITORY, {
+    variables: { repositoryId: id, first: 3 },
     fetchPolicy: "cache-and-network",
   });
-  if (loading) return <ThemedText>Loading...</ThemedText>;
-  if (error)
-    return <ThemedText color="errorText">Error: {error.message}</ThemedText>;
 
   const repo = data?.repository;
   if (!repo)
@@ -35,6 +32,17 @@ const Repository = () => {
 
   const ItemSeparator = () => <View style={styles.separator} />;
 
+  const handleFetchMore = () => {
+    if (!repo.reviews.pageInfo.hasNextPage) return;
+    fetchMore({
+      variables: {
+        after: repo.reviews.pageInfo.endCursor,
+        first: 3,
+        repositoryId: id,
+      },
+    });
+  };
+
   return (
     <FlatList
       data={reviews}
@@ -47,6 +55,8 @@ const Repository = () => {
           <ItemSeparator />
         </>
       }
+      onEndReached={handleFetchMore}
+      onEndReachedThreshold={0.2}
     />
   );
 };

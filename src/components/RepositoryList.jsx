@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDebounce } from "use-debounce";
 import useRepositories from "../hooks/useRepositories";
 import RepositoryListContainer from "./RepositoryListContainer";
-import ThemedText from "./ThemedText";
 
 const RepositoryList = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
@@ -11,18 +10,26 @@ const RepositoryList = () => {
   const [orderBy, setOrderBy] = useState("CREATED_AT");
   const [orderDirection, setOrderDirection] = useState("DESC");
 
-  const { repositories, error } = useRepositories({
+  const { repositories, fetchMore } = useRepositories({
+    first: 8,
     orderBy,
     orderDirection,
     searchKeyword: debouncedSearchKeyword,
   });
 
-  if (error)
-    return <ThemedText color="errorText">Error: {error.message}</ThemedText>;
+  const onEndReach = () => {
+    if (repositories?.pageInfo?.hasNextPage) {
+      fetchMore();
+      console.log("fetching more...");
+    } else {
+      console.log("No more pages");
+    }
+  };
 
   return (
     <RepositoryListContainer
       repositories={repositories}
+      onEndReach={onEndReach}
       orderBy={orderBy}
       setOrderBy={setOrderBy}
       orderDirection={orderDirection}
